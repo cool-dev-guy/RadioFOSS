@@ -1,0 +1,128 @@
+<!---Base code written by cool-dev-guy--->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RadioFOSS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+    *{
+      font-family: "Lexend", sans-serif;
+    }
+    html,body{
+      background:#111;
+      color:#DDD;
+      margin:0px;
+      height:100%;
+      width:100%;
+    }
+    body{
+      display:flex;
+      flex-direction:column;
+    }
+    header{
+      margin:10px;
+      padding:1.5rem;
+      background:#101010;
+      box-shadow:0px 0px 100px 10px #000;
+      border:1px solid #333;
+      border-radius:10px;
+    }
+    main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:10px;
+      overflow-y:scroll;
+    }
+    main label{
+      background:#222;
+      padding:1.5rem;
+      border:1px solid #333;
+      border-radius:10px;
+    }
+    footer{
+      margin:10px;
+      padding:1em;
+      background:#333;
+      display:flex;
+      border:1px solid #444;
+      border-radius:10px;
+      flex-direction:row;
+      gap:10px;
+    }
+    footer audio{
+      display:none;
+      background:red;
+    }
+    #controls{
+      background:#444;
+      border:1px solid #555;
+      color:#DDD;
+      border-radius:10px;
+      padding:10px;
+    }
+    #state{
+      flex:1;
+      background:#444;
+      border:1px solid #555;
+      color:#DDD;
+      border-radius:10px;
+      padding:10px;
+      text-align:left;
+    }
+    input[type="radio"]{
+      display:none;
+    }
+    input[type="radio"]:checked + label {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    RadioFOSS 
+  </header>
+  <main>
+    <input type="radio" id="digitalmalyalee" name="option"><label data-src="https://radio.digitalmalayali.in/listen/stream/radio.mp3" for="digitalmalyalee" onclick="selectStream(this)">ഡിജിറ്റൽ മലയാളി</label><br>
+    <input type="radio" id="digitalmalyalee2" name="option"><label data-src="https://radio.digitalmalayali.in/listen/stream/radio.mp3" for="digitalmalyalee2" onclick="selectStream(this)">ഡിജിറ്റൽ മലയാളി</label><br>
+  </main>
+  <footer>
+      <audio id="audioOutlet"></audio>
+      <button id='state' type="button">Playing Radio</button>
+      <button id='controls' data-state=0 onclick='stateChange()' type="button">Play</button>
+  </footer>
+  <script>
+    const audio = document.getElementById("audioOutlet");
+    const controls = document.getElementById("controls");
+    const state = document.getElementById("state");
+
+    function stateChange() {
+      (Number(controls.getAttribute('data-state')) === 1) ? pauseAudio() : playAudio();
+    }
+
+    function playAudio() {
+      controls.innerText = 'Pause';
+      state.innerText = 'Playing Radio';
+      controls.setAttribute('data-state',1);
+      audio.play();
+    }
+    
+    function pauseAudio() {
+      controls.innerText = 'Play';
+      state.innerText = 'Playback Paused.';
+      controls.setAttribute('data-state',0);
+      audio.pause();
+    }
+
+    function selectStream(elem){
+      const url = elem.getAttribute('data-src');
+      console.log(url)
+      audio.src = url;
+      playAudio();
+    }
+  </script>
+</body>
+</html>
